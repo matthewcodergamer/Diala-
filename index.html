@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#f5f5f2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Diala" />
+  <meta name="description" content="Diala — a free-first AI call desk for contacts, call queues, personalized outreach, FaceTime, Meet, Jitsi, TextNow and optional telecom providers." />
+  <title>Diala — AI Call Desk</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://js.puter.com/v2/"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup" aria-label="Diala AI Call Desk">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <div class="brand-name">Diala</div>
+          <div class="brand-subtitle">AI Call Desk</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="connectionButton" class="status-pill" type="button" aria-label="Connection status">
+          <span class="status-dot"></span><span>Ready</span>
+        </button>
+        <button class="icon-button" id="settingsButton" type="button" aria-label="Open settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.25A3.25 3.25 0 1 0 12 8.75a3.25 3.25 0 0 0 0 6.5Zm8.2-2.55v-1.4l-2.13-.83a6.7 6.7 0 0 0-.59-1.43l.92-2.1-.99-.99-2.1.92a6.7 6.7 0 0 0-1.43-.59L13.05 4h-1.4l-.83 2.13a6.7 6.7 0 0 0-1.43.59l-2.1-.92-.99.99.92 2.1a6.7 6.7 0 0 0-.59 1.43L4.5 11.15v1.4l2.13.83c.14.5.34.98.59 1.43l-.92 2.1.99.99 2.1-.92c.45.25.93.45 1.43.59l.83 2.13h1.4l.83-2.13c.5-.14.98-.34 1.43-.59l2.1.92.99-.99-.92-2.1c.25-.45.45-.93.59-1.43l2.13-.83Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main" id="main">
+      <section class="view active" data-view="home" aria-labelledby="homeTitle">
+        <div class="greeting-block">
+          <p id="dayLabel" class="eyebrow">TODAY</p>
+          <h1 id="homeTitle"><span id="greetingText">Good evening</span>, <span id="displayName">Mr. Douglas</span>.</h1>
+          <p id="homeSummary" class="lede">Your call desk is ready. Import a spreadsheet or ask Diala what to do next.</p>
+        </div>
+
+        <section class="assistant-orb-card" aria-label="Voice assistant">
+          <div class="assistant-copy">
+            <div class="assistant-label"><span class="spark"></span>Diala Assistant</div>
+            <h2 id="assistantPrompt">What would you like to do?</h2>
+            <p id="assistantStatus">Tap the microphone and speak naturally.</p>
+          </div>
+          <button id="voiceButton" class="voice-orb" type="button" aria-label="Talk to Diala">
+            <span class="voice-ring"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8.5v2h7v-2H13v-3.08A7 7 0 0 0 19 11h-2Z"/></svg>
+          </button>
+        </section>
+
+        <section class="section-block" aria-labelledby="linesTitle">
+          <div class="section-heading">
+            <div><p class="eyebrow">LIVE</p><h2 id="linesTitle">Call lines</h2></div>
+            <button id="newCallButton" class="text-button" type="button">New call</button>
+          </div>
+          <div id="activeLines" class="line-stack"></div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Today's activity">
+          <button class="metric-card" data-jump="queue" type="button"><span id="metricQueue">0</span><small>In queue</small></button>
+          <button class="metric-card" data-filter="callback" type="button"><span id="metricCallbacks">0</span><small>Callbacks</small></button>
+          <button class="metric-card" data-filter="missed" type="button"><span id="metricMissed">0</span><small>Missed</small></button>
+        </section>
+
+        <section class="section-block" aria-labelledby="nextTitle">
+          <div class="section-heading"><div><p class="eyebrow">NEXT</p><h2 id="nextTitle">Up next</h2></div></div>
+          <div id="nextContactCard" class="contact-feature empty-state-card"></div>
+        </section>
+      </section>
+
+      <section class="view" data-view="queue" aria-labelledby="queueTitle">
+        <div class="view-header">
+          <div><p class="eyebrow">CONTACTS</p><h1 id="queueTitle">Call queue</h1></div>
+          <label class="primary-small-button file-button">Import XLSX<input id="xlsxInput" type="file" accept=".xlsx,.xls,.csv" hidden /></label>
+        </div>
+        <div class="toolbar-row">
+          <label class="search-field">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20.5 19.1-4.3-4.3a7.2 7.2 0 1 0-1.4 1.4l4.3 4.3 1.4-1.4ZM5.8 10.6a4.8 4.8 0 1 1 9.6 0 4.8 4.8 0 0 1-9.6 0Z"/></svg>
+            <input id="contactSearch" type="search" placeholder="Search name, phone, ZIP" autocomplete="off" />
+          </label>
+          <button id="queueFilterButton" class="icon-button soft" type="button" aria-label="Filter contacts"><svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm3 5h10v2H7v-2Zm3 5h4v2h-4v-2Z"/></svg></button>
+        </div>
+        <div class="queue-actions-card">
+          <div><strong id="selectedCount">0 selected</strong><span>Select contacts to prepare messages or images.</span></div>
+          <div class="inline-actions">
+            <button id="selectAllButton" class="secondary-button compact" type="button">Select visible</button>
+            <button id="prepareSelectedButton" class="primary-button compact" type="button">Prepare</button>
+          </div>
+        </div>
+        <div id="contactList" class="contact-list"></div>
+        <div class="import-helper">
+          <div>
+            <strong>Images for each person</strong>
+            <span>Choose several photos. Diala will match filenames to names when possible.</span>
+          </div>
+          <label class="secondary-button compact file-button">Match photos<input id="bulkImagesInput" type="file" accept="image/*" multiple hidden /></label>
+        </div>
+      </section>
+
+      <section class="view" data-view="compose" aria-labelledby="composeTitle">
+        <div class="view-header"><div><p class="eyebrow">OUTREACH</p><h1 id="composeTitle">Compose</h1></div></div>
+        <div class="segmented" role="tablist" aria-label="Compose mode">
+          <button class="segment active" data-compose-mode="message" type="button">Message</button>
+          <button class="segment" data-compose-mode="image" type="button">Image</button>
+          <button class="segment" data-compose-mode="review" type="button">Review</button>
+        </div>
+
+        <div class="compose-panel active" data-compose-panel="message">
+          <label class="field-label">Message template</label>
+          <textarea id="messageTemplate" class="large-textarea" rows="8" spellcheck="true">Hello {{name}}, I’m reaching out regarding your area in ZIP code {{zip}}. The address we have is {{address}}.</textarea>
+          <div class="token-row" aria-label="Template fields">
+            <button type="button" data-token="{{name}}">Name</button><button type="button" data-token="{{zip}}">ZIP</button><button type="button" data-token="{{address}}">Address</button><button type="button" data-token="{{phone}}">Phone</button>
+          </div>
+          <label class="field-label">Preview contact</label>
+          <select id="previewContactSelect" class="select-field"></select>
+          <div id="messagePreview" class="message-preview"></div>
+          <button id="saveTemplateButton" class="primary-button full" type="button">Save template</button>
+        </div>
+
+        <div class="compose-panel" data-compose-panel="image">
+          <div class="image-mode-card">
+            <div><p class="eyebrow">EXACT TEXT</p><h3>Personalized card</h3><p>Diala renders names, ZIPs and addresses with Canvas so the spelling stays exact.</p></div>
+            <button id="renderCardButton" class="primary-small-button" type="button">Render preview</button>
+          </div>
+          <div class="image-mode-card">
+            <div><p class="eyebrow">AI VISUAL</p><h3>Generate a background</h3><p>Use Puter AI with Google Imagen, then Diala overlays exact contact text afterward.</p></div>
+            <button id="generateAiImageButton" class="primary-small-button" type="button">Generate</button>
+          </div>
+          <label class="field-label">AI visual prompt</label>
+          <textarea id="imagePrompt" class="large-textarea compact-area" rows="5">A polished, trustworthy outreach image with an American civic theme, clean editorial photography, natural lighting, no text, no logos, premium but understated.</textarea>
+          <div class="preview-canvas-wrap">
+            <canvas id="personalizedCanvas" width="1200" height="1500" aria-label="Personalized image preview"></canvas>
+            <div id="canvasEmpty" class="canvas-empty">Choose a contact and render a card.</div>
+          </div>
+          <div class="inline-actions spread">
+            <button id="downloadCardButton" class="secondary-button" type="button">Save image</button>
+            <button id="shareCardButton" class="primary-button" type="button">Share</button>
+          </div>
+        </div>
+
+        <div class="compose-panel" data-compose-panel="review">
+          <div class="review-banner"><strong>Review before sending</strong><span>Prepared outreach never sends automatically unless you connect your own provider backend.</span></div>
+          <div id="reviewList" class="review-list"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view="script" aria-labelledby="scriptTitle">
+        <div class="view-header"><div><p class="eyebrow">CALL GUIDE</p><h1 id="scriptTitle">Script</h1></div><button id="saveScriptButton" class="primary-small-button" type="button">Save</button></div>
+        <textarea id="scriptEditor" class="script-editor" spellcheck="true">Opening
+Hi {{name}}, this is Douglas. Is now an okay time for a quick conversation?
+
+Confirm
+I have your ZIP as {{zip}} and the address as {{address}}. Is that still correct?
+
+Next step
+Perfect. I’ll send you the image we discussed. If you have any questions, just let me know.
+
+Close
+Thank you for your time. Have a great day.</textarea>
+        <div class="script-tip"><strong>Tip</strong><span>During a call, tap a contact and Diala will substitute their details into this script.</span></div>
+      </section>
+
+      <section class="view" data-view="assistant" aria-labelledby="assistantTitle">
+        <div class="view-header"><div><p class="eyebrow">AI</p><h1 id="assistantTitle">Assistant</h1></div><button id="clearChatButton" class="text-button" type="button">Clear</button></div>
+        <div id="chatThread" class="chat-thread" aria-live="polite"></div>
+        <div id="pendingActionBar" class="pending-action-bar hidden"></div>
+        <form id="chatForm" class="chat-composer">
+          <button id="chatMicButton" class="icon-button soft" type="button" aria-label="Voice input"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21H8.5v2h7v-2H13v-3.08A7 7 0 0 0 19 11h-2Z"/></svg></button>
+          <textarea id="chatInput" rows="1" placeholder="Ask Diala…" aria-label="Ask Diala"></textarea>
+          <button class="send-button" type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M3.4 20.4 21 12 3.4 3.6l-.1 6.5 11 1.9-11 1.9.1 6.5Z"/></svg></button>
+        </form>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary navigation">
+      <button class="nav-item active" data-view-target="home" type="button"><svg viewBox="0 0 24 24"><path d="M4 10.8 12 4l8 6.8V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-9.2Z"/></svg><span>Home</span></button>
+      <button class="nav-item" data-view-target="queue" type="button"><svg viewBox="0 0 24 24"><path d="M8 7a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm-4.5 11c.4-3.3 2.9-5.5 7.5-5.5s7.1 2.2 7.5 5.5H3.5Zm14-9.5A2.5 2.5 0 1 0 17.5 3a2.5 2.5 0 0 0 0 5.5ZM19.2 11c2.4.6 3.7 2.2 4 4.5H20c-.2-1.8-.8-3.2-1.8-4.2l1-.3Z"/></svg><span>Queue</span></button>
+      <button class="nav-item" data-view-target="compose" type="button"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 3V5Zm3 4h10V7H7v2Zm0 4h7v-2H7v2Z"/></svg><span>Compose</span></button>
+      <button class="nav-item" data-view-target="script" type="button"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6V3Zm8 1.8V8h3.2L14 4.8ZM9 12h7v-2H9v2Zm0 4h7v-2H9v2Z"/></svg><span>Script</span></button>
+      <button class="nav-item" data-view-target="assistant" type="button"><svg viewBox="0 0 24 24"><path d="M12 2.5 14 8l5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2 2-5.5ZM18.5 15l1 2.5L22 18.5l-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z"/></svg><span>Assistant</span></button>
+    </nav>
+  </div>
+
+  <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
+  <aside id="settingsSheet" class="sheet hidden" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><div><p class="eyebrow">DIALA</p><h2>Settings</h2></div><button class="icon-button" data-close-sheet type="button" aria-label="Close settings">×</button></div>
+    <div class="settings-list">
+      <section class="settings-section"><h3>Profile</h3><label class="setting-row input-row"><span><strong>Your display name</strong><small>Used in greetings and assistant speech.</small></span><input id="nameSetting" type="text" value="Mr. Douglas" /></label></section>
+      <section class="settings-section"><h3>AI & voice</h3>
+        <label class="setting-row select-row"><span><strong>AI model</strong><small>Runs through your Puter account.</small></span><select id="modelSetting"><option value="gpt-5-nano">GPT fast</option><option value="gemini-3.1-flash-lite">Gemini fast</option></select></label>
+        <button id="puterConnectButton" class="setting-row action-row" type="button"><span><strong>Connect Puter</strong><small id="puterStatus">AI will ask you to sign in when needed.</small></span><span class="chevron">›</span></button>
+        <label class="setting-row switch-row"><span><strong>Speak assistant replies</strong><small>Uses Puter TTS with device voice fallback.</small></span><input id="ttsToggle" type="checkbox" checked /><span class="switch"></span></label>
+      </section>
+      <section class="settings-section"><h3>Calling & messaging</h3>
+        <label class="setting-row select-row"><span><strong>Preferred channel</strong><small>Automatic keeps all free fallbacks available.</small></span><select id="preferredChannel"><option value="auto">Automatic</option><option value="facetime">FaceTime</option><option value="textnow">TextNow</option><option value="meet">Google Meet</option><option value="jitsi">Jitsi</option><option value="tel">Phone</option></select></label>
+        <label class="setting-row switch-row"><span><strong>Show paid providers</strong><small>Expose RingCentral/Twilio adapters when configured.</small></span><input id="paidProvidersToggle" type="checkbox" /><span class="switch"></span></label>
+        <label class="setting-row input-row"><span><strong>Provider backend URL</strong><small>Optional HTTPS endpoint you control for real SMS/MMS/telephony.</small></span><input id="providerEndpoint" type="url" placeholder="https://…" /></label>
+      </section>
+      <section class="settings-section"><h3>Notifications</h3><button id="notificationButton" class="setting-row action-row" type="button"><span><strong>Enable notifications</strong><small id="notificationStatus">Required for future server push.</small></span><span class="chevron">›</span></button></section>
+      <section class="settings-section"><h3>Appearance</h3><label class="setting-row select-row"><span><strong>Theme</strong><small>Designed for iPhone Safari and Home Screen.</small></span><select id="themeSetting"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></section>
+      <section class="settings-section danger-section"><button id="resetDataButton" class="setting-row action-row danger" type="button"><span><strong>Reset local data</strong><small>Removes imported contacts, notes and local history from this device.</small></span></button></section>
+    </div>
+  </aside>
+
+  <aside id="contactSheet" class="sheet contact-sheet hidden" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div id="contactSheetContent"></div>
+  </aside>
+
+  <div id="callChooser" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="callChooserTitle">
+    <div class="modal-card">
+      <div class="modal-header"><div><p class="eyebrow">CALL WITH</p><h2 id="callChooserTitle">Choose a channel</h2></div><button class="icon-button" data-close-modal type="button" aria-label="Close">×</button></div>
+      <div id="callChooserContact" class="chooser-contact"></div>
+      <div id="callChannelList" class="channel-list"></div>
+    </div>
+  </div>
+
+  <div id="jitsiModal" class="jitsi-modal hidden" aria-hidden="true">
+    <div class="jitsi-topbar"><div><strong id="jitsiTitle">Diala Meeting</strong><span>Jitsi • free web conference</span></div><button id="closeJitsiButton" class="end-call-button" type="button">End</button></div>
+    <div id="jitsiContainer" class="jitsi-container"></div>
+  </div>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+
+  <script src="js/core.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/comms.js"></script>
+  <script src="js/media.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
