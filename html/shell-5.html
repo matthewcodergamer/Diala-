@@ -1,0 +1,23 @@
+paid providers</strong><small>Expose Twilio/RingCentral adapters when configured.</small></span><input id="paidProvidersToggle" type="checkbox" /><span class="switch"></span></label>
+        <label class="setting-row input-row"><span><strong>Provider backend URL</strong><small>Optional HTTPS endpoint you control for real SMS/MMS/telephony.</small></span><input id="providerEndpoint" type="url" placeholder="https://…" /></label>
+      </section>
+      <section class="settings-section"><h3>People enrichment</h3>
+        <label class="setting-row input-row"><span><strong>Secure enrichment proxy</strong><small>Optional backend URL for Nyne/another permitted enrichment API. Never put provider secrets in this page.</small></span><input id="enrichmentEndpoint" type="url" placeholder="https://your-worker.example/enrich" /></label>
+        <p class="settings-footnote">Diala only enriches a contact when you tap Enrich. Results may be incomplete or estimated; verify important details before relying on them.</p>
+      </section>
+      <section class="settings-section"><h3>Notifications</h3><button id="notificationButton" class="setting-row action-row" type="button"><span><strong>Enable notifications</strong><small id="notificationStatus">Home Screen web apps can receive Web Push when a server is configured.</small></span><span class="chevron">›</span></button></section>
+      <section class="settings-section"><h3>Appearance</h3><label class="setting-row select-row"><span><strong>Theme</strong><small>System follows your iPhone appearance.</small></span><select id="themeSetting"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></section>
+      <section class="settings-section danger-section"><button id="resetDataButton" class="setting-row action-row danger" type="button"><span><strong>Reset local data</strong><small>Removes imported contacts, notes and local history from this device.</small></span></button></section>
+    </div>
+  </aside>
+
+  <aside id="contactSheet" class="sheet contact-sheet hidden" aria-hidden="true"><div class="sheet-handle"></div><div id="contactSheetContent"></div></aside>
+
+  <div id="callChooser" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="callChooserTitle">
+    <div class="modal-card"><div class="modal-header"><div><p class="eyebrow">CONTACT WITH</p><h2 id="callChooserTitle">Choose a channel</h2></div><button class="ios-circle-button" data-close-modal type="button" aria-label="Close">×</button></div><div id="callChooserContact" class="chooser-contact"></div><div id="callChannelList" class="channel-list"></div></div>
+  </div>
+
+  <div id="jitsiModal" class="jitsi-modal hidden" aria-hidden="true"><div class="jitsi-topbar"><div><strong id="jitsiTitle">Diala Meeting</strong><span>Jitsi · web conference</span></div><button id="closeJitsiButton" class="end-call-button" type="button">End</button></div><div id="jitsiContainer" class="jitsi-container"></div></div>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+
+  

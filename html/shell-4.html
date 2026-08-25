@@ -1,0 +1,37 @@
+/button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary navigation">
+      <button class="nav-item active" data-view-target="home" type="button"><svg viewBox="0 0 24 24"><path d="M4 10.8 12 4l8 6.8V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-9.2Z"/></svg><span>Home</span></button>
+      <button class="nav-item" data-view-target="queue" type="button"><svg viewBox="0 0 24 24"><path d="M8 7a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm-4.5 11c.4-3.3 2.9-5.5 7.5-5.5s7.1 2.2 7.5 5.5H3.5Zm14-9.5A2.5 2.5 0 1 0 17.5 3a2.5 2.5 0 0 0 0 5.5ZM19.2 11c2.4.6 3.7 2.2 4 4.5H20c-.2-1.8-.8-3.2-1.8-4.2l1-.3Z"/></svg><span>Contacts</span></button>
+      <button class="nav-item" data-view-target="goals" type="button"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 0 9.5 9.5H19a7 7 0 1 1-7-7V2.5Zm0 4a5.5 5.5 0 1 0 5.5 5.5H15a3 3 0 1 1-3-3V6.5Zm0 4a1.5 1.5 0 1 0 1.5 1.5H12v-1.5Z"/></svg><span>Goals</span></button>
+      <button class="nav-item" data-view-target="compose" type="button"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 3V5Zm3 4h10V7H7v2Zm0 4h7v-2H7v2Z"/></svg><span>Outreach</span></button>
+      <button class="nav-item" data-view-target="assistant" type="button"><svg viewBox="0 0 24 24"><path d="M12 2.5 14 8l5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2 2-5.5ZM18.5 15l1 2.5L22 18.5l-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z"/></svg><span>Lia</span></button>
+    </nav>
+  </div>
+
+  <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
+  <aside id="settingsSheet" class="sheet hidden" aria-hidden="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><div><p class="eyebrow">DIALA</p><h2>Settings</h2></div><button class="ios-circle-button" data-close-sheet type="button" aria-label="Close settings">×</button></div>
+    <div class="settings-list">
+      <section class="settings-section"><h3>Profile</h3><label class="setting-row input-row"><span><strong>Your display name</strong><small>Used in greetings and assistant speech.</small></span><input id="nameSetting" type="text" value="Mr. Douglas" /></label></section>
+      <section class="settings-section"><h3>Assistant</h3>
+        <label class="setting-row input-row"><span><strong>Assistant name</strong><small>The name you use to wake your assistant.</small></span><input id="assistantNameSetting" type="text" value="Lia" maxlength="24" /></label>
+        <label class="setting-row input-row"><span><strong>Wake phrase</strong><small>Example: “Hey Lia”.</small></span><input id="wakePhraseSetting" type="text" value="Hey Lia" maxlength="40" /></label>
+        <label class="setting-row switch-row"><span><strong>Hands-free while open</strong><small>After one tap, keep restarting the microphone while Diala is visible.</small></span><input id="alwaysListeningToggle" type="checkbox" checked /><span class="switch"></span></label>
+        <label class="setting-row switch-row"><span><strong>Require wake phrase</strong><small>Outside an active conversation, only respond after your wake phrase.</small></span><input id="wakePhraseToggle" type="checkbox" checked /><span class="switch"></span></label>
+      </section>
+      <section class="settings-section"><h3>AI & voice</h3>
+        <label class="setting-row select-row"><span><strong>AI model</strong><small>Fast models reduce the pause after you finish speaking.</small></span><select id="modelSetting"><option value="gpt-5.4-nano">GPT-5.4 Nano</option><option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite</option></select></label>
+        <button id="puterConnectButton" class="setting-row action-row" type="button"><span><strong>Connect Puter</strong><small id="puterStatus">AI will ask you to sign in when needed.</small></span><span class="chevron">›</span></button>
+        <label class="setting-row switch-row"><span><strong>Speak assistant replies</strong><small>High-quality TTS first, iPhone voice fallback.</small></span><input id="ttsToggle" type="checkbox" checked /><span class="switch"></span></label>
+        <label class="setting-row select-row"><span><strong>Voice</strong><small>Choose a natural female voice profile.</small></span><select id="ttsVoiceSetting"><option value="lia">Lia Natural · ElevenLabs Flash</option><option value="coral">Coral · OpenAI</option><option value="aoede">Aoede · Gemini</option><option value="device">iPhone system voice</option></select></label>
+        <button id="testVoiceButton" class="setting-row action-row" type="button"><span><strong>Test Lia’s voice</strong><small>Hear the current voice profile.</small></span><span class="chevron">›</span></button>
+      </section>
+      <section class="settings-section"><h3>Calling & messaging</h3>
+        <label class="setting-row select-row"><span><strong>Preferred channel</strong><small>Automatic keeps all available fallbacks.</small></span><select id="preferredChannel"><option value="auto">Automatic</option><option value="facetime">FaceTime</option><option value="textnow">TextNow app</option><option value="meet">Google Meet app</option><option value="jitsi">Jitsi</option><option value="tel">Phone</option></select></label>
+        <label class="setting-row switch-row"><span><strong>Show 

@@ -1,0 +1,43 @@
+/* Keyboard and compact iPhone 11 sizing. */
+@media (max-width: 420px) {
+  :root { --topbar-h: 54px; --tabbar-h: 70px; }
+  .topbar { padding-inline: 13px; }
+  .view-scroll { padding-inline: 13px; }
+  .assistant-stage { min-height: 360px; border-radius: 27px; padding-inline: 12px; }
+  .voice-reply { font-size: 16px; min-height: 58px; padding: 11px 14px; }
+  .lia-orb-button { width: 160px; height: 160px; margin-top: 4px; }
+  .lia-orb { width: 143px; height: 143px; }
+  .assistant-quick-row button { font-size: 11px; }
+  .goal-glance-grid { grid-template-columns: 1fr 1.35fr 1fr; }
+  .goal-glance-grid strong { font-size: 12px; }
+  h1 { font-size: 34px; }
+  .brand-subtitle { display: none; }
+  .ios-status-chip { max-width: 88px; overflow: hidden; }
+  .ios-status-chip span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+@media (max-height: 720px) and (max-width: 520px) {
+  .assistant-stage { min-height: 315px; }
+  .lia-orb-button { width: 140px; height: 140px; }
+  .lia-orb { width: 126px; height: 126px; }
+  .assistant-quick-row { margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* V2 people enrichment */
+.enrichment-card { margin: 14px 0 4px; padding: 14px; border-radius: 16px; background: var(--ios-group); border: .5px solid var(--ios-separator); }
+.enrichment-card.empty { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.enrichment-card.empty > div { min-width: 0; display: grid; gap: 3px; }
+.enrichment-card.empty span, .enrichment-head span { color: var(--ios-secondary); font-size: 11px; }
+.enrichment-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.enrichment-head > div { display: grid; gap: 3px; min-width: 0; }
+.enrichment-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.enrichment-grid > div { min-width: 0; padding: 10px; border-radius: 12px; background: var(--ios-group-2); border: .5px solid var(--ios-separator); }
+.enrichment-grid .wide { grid-column: 1 / -1; }
+.enrichment-grid small { display: block; color: var(--ios-secondary); font-size: 9px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.enrichment-grid strong { display: block; font-size: 12px; font-weight: 600; line-height: 1.32; overflow-wrap: anywhere; }
+.data-caution { margin: 10px 2px 0; color: var(--ios-secondary); font-size: 10px; line-height: 1.35; }
+.chooser-sub { font-size: 12px; color: var(--ios-secondary); margin-top: 4px; }

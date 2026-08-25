@@ -1,0 +1,83 @@
+
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup" aria-label="Diala AI Call Desk">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="brand-copy">
+          <div class="brand-name">Diala</div>
+          <div class="brand-subtitle">AI Call Desk</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="connectionButton" class="ios-status-chip" type="button" aria-label="Assistant status">
+          <span class="status-dot"></span><span id="topStatusText">Ready</span>
+        </button>
+        <button class="ios-circle-button" id="settingsButton" type="button" aria-label="Open settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.25A3.25 3.25 0 1 0 12 8.75a3.25 3.25 0 0 0 0 6.5Zm8.2-2.55v-1.4l-2.13-.83a6.7 6.7 0 0 0-.59-1.43l.92-2.1-.99-.99-2.1.92a6.7 6.7 0 0 0-1.43-.59L13.05 4h-1.4l-.83 2.13a6.7 6.7 0 0 0-1.43.59l-2.1-.92-.99.99.92 2.1a6.7 6.7 0 0 0-.59 1.43L4.5 11.15v1.4l2.13.83c.14.5.34.98.59 1.43l-.92 2.1.99.99 2.1-.92c.45.25.93.45 1.43.59l.83 2.13h1.4l.83-2.13c.5-.14.98-.34 1.43-.59l2.1.92.99-.99-.92-2.1c.25-.45.45-.93.59-1.43l2.13-.83Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main" id="main">
+      <section class="view active home-view" data-view="home" aria-labelledby="homeTitle">
+        <div class="view-scroll home-scroll">
+          <div class="greeting-block compact-greeting">
+            <p id="dayLabel" class="eyebrow">TODAY</p>
+            <h1 id="homeTitle"><span id="greetingText">Good evening</span>, <span id="displayName">Mr. Douglas</span>.</h1>
+            <p id="homeSummary" class="lede">Your call desk is ready.</p>
+          </div>
+
+          <section id="assistantStage" class="assistant-stage" aria-label="Lia voice assistant">
+            <div class="voice-reply-wrap">
+              <div id="voiceReply" class="voice-reply" aria-live="polite">
+                <span id="assistantPrompt">What would you like me to do?</span>
+              </div>
+            </div>
+            <button id="voiceButton" class="lia-orb-button" type="button" aria-label="Start or pause hands-free voice assistant">
+              <span class="lia-orb" aria-hidden="true">
+                <span class="orb-glow orb-a"></span><span class="orb-glow orb-b"></span><span class="orb-glow orb-c"></span><span class="orb-core"></span>
+              </span>
+            </button>
+            <div class="voice-state-row">
+              <span class="live-dot"></span>
+              <span id="assistantStatus">Tap the orb once to enable hands-free listening.</span>
+            </div>
+            <div class="assistant-quick-row" aria-label="Assistant quick actions">
+              <button id="quickContactsButton" type="button">Contacts</button>
+              <button id="quickGoalButton" type="button">Today’s goal</button>
+              <button id="openScriptQuick" type="button">Script</button>
+            </div>
+          </section>
+
+          <section class="ios-card goal-glance" aria-labelledby="goalGlanceTitle">
+            <button class="card-link-cover" data-jump="goals" type="button" aria-label="Open goals"></button>
+            <div class="section-heading flush">
+              <div><p class="eyebrow">TODAY’S GOAL</p><h2 id="goalGlanceTitle"><span id="goalProgressValue">0</span> of <span id="goalTargetValue">100</span></h2></div>
+              <div class="mini-ring" aria-hidden="true"><span id="goalRingLabel">0%</span></div>
+            </div>
+            <div class="ios-progress"><span id="goalProgressBar"></span></div>
+            <div class="goal-glance-grid">
+              <div><small>Remaining</small><strong id="goalRemaining">100</strong></div>
+              <div><small>Estimated finish</small><strong id="goalEta">—</strong></div>
+              <div><small>Pace</small><strong id="goalPace">Not started</strong></div>
+            </div>
+          </section>
+
+          <section class="section-block" aria-labelledby="linesTitle">
+            <div class="section-heading">
+              <div><p class="eyebrow">LIVE</p><h2 id="linesTitle">Call lines</h2></div>
+              <button id="newCallButton" class="ios-text-button" type="button">New call</button>
+            </div>
+            <div id="activeLines" class="line-stack"></div>
+          </section>
+
+          <section class="metrics-grid" aria-label="Today's activity">
+            <button class="metric-card" data-jump="queue" type="button"><span id="metricQueue">0</span><small>In queue</small></button>
+            <button class="metric-card" data-filter="callback" type="button"><span id="metricCallbacks">0</span><small>Callbacks</small></button>
+            <button class="metric-card" data-filter="missed" type="button"><span id="metricMissed">0</span><small>Missed</small></button>
+          </section>
+
+          <section class="section-block" aria-labelledby="nextTitle">
+            <div class="section-heading"><div><p class="eyebrow">NEXT</p><h2 id="nextTitle">Up next</h2></div></div>
+            <div id="nextContactCard" class="contact-feature empty-state-card"></div>
+       

@@ -1,0 +1,66 @@
+   </section>
+        </div>
+      </section>
+
+      <section class="view" data-view="queue" aria-labelledby="queueTitle">
+        <div class="view-scroll">
+          <div class="view-header sticky-view-header">
+            <div><p class="eyebrow">CONTACTS</p><h1 id="queueTitle">Contacts</h1></div>
+            <label class="ios-primary-small file-button">Import<input id="xlsxInput" type="file" accept=".xlsx,.xls,.csv" hidden /></label>
+          </div>
+          <div class="contact-import-row">
+            <button id="deviceContactsButton" class="ios-secondary-button" type="button"><span class="button-symbol">＋</span>Add from Contacts</button>
+            <label class="ios-secondary-button file-button">Import vCard<input id="vcfInput" type="file" accept=".vcf,text/vcard,text/x-vcard" multiple hidden /></label>
+          </div>
+          <p id="contactAccessNote" class="helper-note">On iPhone Safari, direct Contacts permission is not exposed to web apps. Diala will use the system contact picker where supported, otherwise vCard import.</p>
+          <div class="toolbar-row">
+            <label class="search-field">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20.5 19.1-4.3-4.3a7.2 7.2 0 1 0-1.4 1.4l4.3 4.3 1.4-1.4ZM5.8 10.6a4.8 4.8 0 1 1 9.6 0 4.8 4.8 0 0 1-9.6 0Z"/></svg>
+              <input id="contactSearch" type="search" placeholder="Search name, phone, ZIP" autocomplete="off" />
+            </label>
+            <button id="queueFilterButton" class="ios-circle-button soft" type="button" aria-label="Filter contacts"><svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm3 5h10v2H7v-2Zm3 5h4v2h-4v-2Z"/></svg></button>
+          </div>
+          <div class="queue-actions-card">
+            <div><strong id="selectedCount">0 selected</strong><span>Select people to prepare messages or media.</span></div>
+            <div class="inline-actions">
+              <button id="selectAllButton" class="ios-secondary-button compact" type="button">Select visible</button>
+              <button id="prepareSelectedButton" class="ios-primary-button compact" type="button">Prepare</button>
+            </div>
+          </div>
+          <div id="contactList" class="contact-list"></div>
+          <div class="import-helper ios-card">
+            <div><strong>Match contact photos</strong><span>Choose several images and Diala will match filenames to names or phone endings.</span></div>
+            <label class="ios-secondary-button compact file-button">Choose photos<input id="bulkImagesInput" type="file" accept="image/*" multiple hidden /></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="goals" aria-labelledby="goalsTitle">
+        <div class="view-scroll">
+          <div class="view-header sticky-view-header"><div><p class="eyebrow">FOCUS</p><h1 id="goalsTitle">Goals</h1></div></div>
+          <section class="goal-hero ios-card">
+            <div class="goal-number"><span id="goalWorkedBig">0</span><small>worked today</small></div>
+            <div class="goal-target-line">of <strong id="goalTargetBig">100</strong> contacts</div>
+            <div class="ios-progress large"><span id="goalProgressBarBig"></span></div>
+            <p id="goalInsight" class="goal-insight">Start your first contact and I’ll estimate your finish time.</p>
+          </section>
+          <section class="ios-card settings-inline-card">
+            <div class="ios-list-row"><div><strong>Daily target</strong><small>How many contacts you want to work today.</small></div><input id="dailyGoalInput" class="number-field" type="number" min="1" max="5000" inputmode="numeric" value="100" /></div>
+            <div class="ios-list-row"><div><strong>Planning time per contact</strong><small>Used until Diala has enough real pace data.</small></div><div class="number-with-unit"><input id="avgMinutesInput" class="number-field" type="number" min="0.5" max="60" step="0.5" inputmode="decimal" value="2.5" /><span>min</span></div></div>
+          </section>
+          <section class="goal-stats-grid">
+            <div class="ios-card stat-card"><small>Remaining</small><strong id="goalRemainingBig">100</strong></div>
+            <div class="ios-card stat-card"><small>Current pace</small><strong id="goalPaceBig">—</strong></div>
+            <div class="ios-card stat-card"><small>Projected finish</small><strong id="goalEtaBig">—</strong></div>
+            <div class="ios-card stat-card"><small>Queue days</small><strong id="queueDaysEstimate">—</strong></div>
+          </section>
+          <section class="ios-card goal-explainer">
+            <strong>How Diala estimates your day</strong>
+            <p>Diala learns from contacts you actually work in this app. Until there is enough activity, it uses your planning time per contact. External FaceTime, Meet and TextNow calls cannot report their real duration back to Safari.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" data-view="compose" aria-labelledby="composeTitle">
+        <div class="view-scroll">
+          <div class="view-header sticky-view-header"><div><p class="eyebrow">OUTREACH</p><h1 id="composeTitle">Outreach</h1></div
